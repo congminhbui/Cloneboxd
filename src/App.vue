@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Navbar v-if="authenticated"></Navbar>
+  <router-view />
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.btn.btn-primary {
+  background-color: #15ad2d !important;
+  border-color: #15ad2d !important;
+}
+.btn.btn-primary:hover {
+  background-color: #1fbf3a !important;
+  border-color: #1fbf3a !important;
+}
+.btn.btn-primary:active {
+  background-color: #0f8a23 !important;
+  border-color: #0f8a23 !important;
 }
 </style>
+
+<script>
+import Navbar from "@/components/Nav-bar.vue";
+
+export default {
+  components: {
+    Navbar,
+  },
+  data() {
+    return {
+      authenticated: false,
+    };
+  },
+  mounted() {
+    if (this.authenticated == false) {
+      this.$router.replace({ name: "login" });
+    }
+  },
+  methods: {
+    setAuthenticated(status) {
+      this.authenticated = status;
+    },
+    logout() {
+      this.authenticated = false;
+      this.$router.replace({ name: "login" });
+    },
+  },
+};
+</script>
